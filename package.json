@@ -1,0 +1,20 @@
+{
+  "name": "esa-frontmatter-rewrite-push-github",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "log": "wrangler tail",
+    "biome": "biome check --write ./src && biome format --write ./src"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.2",
+    "hono": "^4.6.1",
+    "yaml": "^2.5.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@cloudflare/workers-types": "^4.20240529.0",
+    "wrangler": "^3.57.2"
+  }
+}
