@@ -9,7 +9,7 @@ async function GitCommit(
   path: string,
   frontmatter: Frontmatter,
   content: string,
-  message: string
+  message: string,
 ): Promise<boolean> {
   const filePath = `${path}/${frontmatter.number}.md`;
 

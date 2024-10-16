@@ -37,7 +37,10 @@ function CreateFrontmatter(body: Request): [Frontmatter, string] {
   }
 
   // codeblock の中身を取得
-  const topYamlcodeblockContent = topYamlcodeblock.split("```")[1].replace("yml", "").replace("yaml", "");
+  const topYamlcodeblockContent = topYamlcodeblock
+    .split("```")[1]
+    .replace("yml", "")
+    .replace("yaml", "");
   const yaml: YamlParse = parse(topYamlcodeblockContent) || {};
   const body_mdRemoveTopYamlcodeblock = body.post.body_md.replace(topYamlcodeblock, "");
 

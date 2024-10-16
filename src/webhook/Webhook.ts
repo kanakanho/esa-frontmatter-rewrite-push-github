@@ -4,6 +4,7 @@ import type { BlankInput } from "hono/types";
 import type { Request } from "../types/EsaWebhookRequest";
 import CreateContent from "./CreateContent";
 import CreateFrontmatter from "./CreateFrontmatter";
+import FixCodeblock from "./FixCodeblock";
 import GitCommit from "./GitCommit";
 
 async function Webhook(c: Context<Env, "/", BlankInput>) {
@@ -22,7 +23,9 @@ async function Webhook(c: Context<Env, "/", BlankInput>) {
     frontmatter.isActive = false;
   }
 
-  const content = CreateContent(frontmatter, body_md);
+  const body_md_fixed = FixCodeblock(body_md);
+
+  const content = CreateContent(frontmatter, body_md_fixed);
 
   const ok = await GitCommit(
     GITHUB_ACCESS_TOKEN,
@@ -32,7 +35,7 @@ async function Webhook(c: Context<Env, "/", BlankInput>) {
     GITHUB_PATH,
     frontmatter,
     content,
-    body.post.message as string
+    body.post.message as string,
   );
 
   if (!ok) {
@@ -40,14 +43,14 @@ async function Webhook(c: Context<Env, "/", BlankInput>) {
       {
         status: "error",
       },
-      400
+      400,
     );
   }
   return c.json(
     {
       status: "ok",
     },
-    201
+    201,
   );
 }
 
