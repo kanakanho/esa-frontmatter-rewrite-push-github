@@ -6,7 +6,6 @@ import CreateContent from "./CreateContent";
 import CreateFrontmatter from "./CreateFrontmatter";
 import FixCodeblock from "./FixCodeblock";
 import GitCommit from "./GitCommit";
-import FixCodeblock from "./FixCodeblock";
 
 async function Webhook(c: Context<Env, "/", BlankInput>) {
   const { GITHUB_ACCESS_TOKEN, GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH, GITHUB_PATH } = env<{
@@ -36,7 +35,7 @@ async function Webhook(c: Context<Env, "/", BlankInput>) {
     GITHUB_PATH,
     frontmatter,
     content,
-    body.post.message as string,
+    body.post.message as string
   );
 
   if (!ok) {
@@ -44,14 +43,14 @@ async function Webhook(c: Context<Env, "/", BlankInput>) {
       {
         status: "error",
       },
-      400,
+      400
     );
   }
   return c.json(
     {
       status: "ok",
     },
-    201,
+    201
   );
 }
 
