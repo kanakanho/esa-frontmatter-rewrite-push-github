@@ -5,7 +5,7 @@ import type { Frontmatter, YamlParse } from "../types/Frontmatter";
 function CreateFrontmatter(body: Request): [Frontmatter, string] {
   const dirName = body.post.name.split(" #")[0];
   const title = dirName.split("/").slice(-1)[0];
-  const date = new Date().toLocaleDateString("sv-SE");
+  const date = new Date().toLocaleDateString("ja-JP");
 
   if (!body.post.body_md) {
     return [
@@ -14,6 +14,7 @@ function CreateFrontmatter(body: Request): [Frontmatter, string] {
         number: body.post.number,
         title: title,
         date: date,
+        tags: [],
         options: {},
       },
       "",
@@ -21,7 +22,8 @@ function CreateFrontmatter(body: Request): [Frontmatter, string] {
   }
 
   // body.post.body_md の一番最初の codeblock ```yml ``` or ```yaml ```` を取得
-  const topYamlcodeblock = body.post.body_md.match(/```(yml|yaml)([\s\S]*?)```/)?.[0];
+  const topYamlcodeblockMatch = body.post.body_md.match(/```(yml|yaml)([\s\S]*?)```/);
+  const topYamlcodeblock = topYamlcodeblockMatch ? topYamlcodeblockMatch[0] : null;
 
   if (!topYamlcodeblock) {
     return [
@@ -30,6 +32,7 @@ function CreateFrontmatter(body: Request): [Frontmatter, string] {
         number: body.post.number,
         title: title,
         date: date,
+        tags: [],
         options: {},
       },
       body.post.body_md,
@@ -50,8 +53,8 @@ function CreateFrontmatter(body: Request): [Frontmatter, string] {
       number: body.post.number,
       title: title,
       date: date,
+      tags: yaml.tags,
       options: {
-        tags: yaml.tags,
         description: yaml.description,
         repository: yaml.repository,
         youtube: yaml.youtube,

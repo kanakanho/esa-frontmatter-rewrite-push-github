@@ -3,11 +3,11 @@ export type Frontmatter = {
   number: number;
   title: string;
   date: string;
+  tags: string[];
   options?: options;
 };
 
 export type options = {
-  tags?: string[];
   description?: string;
   repository?: string;
   youtube?: string;
@@ -17,4 +17,5 @@ export type options = {
 
 export type YamlParse = {
   isActive: boolean;
+  tags: string[];
 } & options;

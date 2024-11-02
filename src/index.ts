@@ -7,7 +7,7 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-app.post("/api/webhook", async (c) => {
+app.post("/api/portfolio-astro-react/webhook", async (c) => {
   return await Webhook(c);
 });
 
