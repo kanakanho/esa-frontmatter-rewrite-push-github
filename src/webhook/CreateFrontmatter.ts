@@ -5,7 +5,8 @@ import type { Frontmatter, YamlParse } from "../types/Frontmatter";
 function CreateFrontmatter(body: Request): [Frontmatter, string] {
   const dirName = body.post.name.split(" #")[0];
   const title = dirName.split("/").slice(-1)[0];
-  const date = new Date().toLocaleDateString("ja-JP");
+  const lastDir = dirName.split("/").slice(-2)[0];
+  const date = lastDir === "latest" ? "latest" : new Date().toLocaleDateString("ja-JP");
 
   if (!body.post.body_md) {
     return [
